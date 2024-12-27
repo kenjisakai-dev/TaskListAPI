@@ -88,7 +88,7 @@ describe("User", () => {
 
     expect(response.statusCode).toEqual(400);
     expect(response.body).toStrictEqual({
-      message: "E-mail ja cadastrado.",
+      message: "E-mail já cadastrado.",
     });
   });
 
@@ -102,6 +102,13 @@ describe("User", () => {
     expect(typeof response.body.token).toEqual("string");
   });
 
+  test("Login User - Error Missing Data", async () => {
+    const response = await supertest.post("/api/v1/taskList/user/login");
+
+    expect(response.statusCode).toEqual(401);
+    expect(response.body).toStrictEqual({ message: "Login Inválido." });
+  });
+
   test("Login User - Error Email Inexisting", async () => {
     const response = await supertest.post("/api/v1/taskList/user/login").send({
       email: "stella123@gmail.com",
@@ -112,10 +119,10 @@ describe("User", () => {
     expect(response.body).toStrictEqual({ message: "Login Inválido." });
   });
 
-  test("Login User - Error PassWord Invalid", async () => {
+  test("Login User - Error Password Invalid", async () => {
     const response = await supertest.post("/api/v1/taskList/user/login").send({
       email: "stella_araujo@gmail.com",
-      password: "stela123@BR7",
+      password: "stela@BR7",
     });
 
     expect(response.statusCode).toEqual(401);
