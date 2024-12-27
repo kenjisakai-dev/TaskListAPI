@@ -21,9 +21,11 @@ export const authMiddleware = async (
   const payload = verifyToken(token) as IUserPayload;
 
   const userService = container.resolve(UserService);
-  const user = await userService.getUserByCod(payload.cod_user);
+  const getUser = await userService.getUserByCod(payload.cod_user);
 
-  req.body = { ...req.body, user };
+  const { password, ...user } = getUser;
+
+  req.body = { ...req.body, cod_user: user.cod_user, user };
 
   next();
 };

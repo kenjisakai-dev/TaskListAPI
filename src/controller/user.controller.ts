@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container, injectable } from "tsyringe";
-import { BadRequestError } from "../helpers/apiError";
+import { BadRequestError, UnauthorizedError } from "../helpers/apiError";
 import { UserService } from "../services/user.service";
 import { IUser } from "../interface/user.interface";
 import { validatePassword } from "../helpers/validatePassword";
@@ -28,7 +28,11 @@ export class UserController {
 
   async login(req: Request, res: Response) {
     const user: IAuthLogin = req.body;
+    const { email, password } = user;
 
+    if (!email || !password) {
+      throw new UnauthorizedError("Login Inválido.");
+    }
     const userService = container.resolve(UserService);
     const token = await userService.login(user);
 

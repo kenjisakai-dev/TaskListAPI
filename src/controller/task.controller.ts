@@ -20,11 +20,11 @@ export class TaskController {
     res.status(201).json();
   }
 
-  async getTask(req: Request, res: Response) {
-    const cod_task = Number(req.params.cod_task);
+  async getTasksByUser(req: Request, res: Response) {
+    const { cod_user }: ITask = req.body;
 
     const taskService = container.resolve(TaskService);
-    const response = await taskService.getTask(cod_task);
+    const response = await taskService.getTasksByUser(cod_user);
 
     res.status(200).json(response);
   }

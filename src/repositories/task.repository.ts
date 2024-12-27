@@ -16,25 +16,19 @@ export class TaskRepository {
     await this.taskRepository.save(task);
   }
 
-  async getTask(cod_task: number) {
+  async getTaskByUserAndTask(cod_user: number, cod_task: number) {
     return await this.taskRepository.findOne({
-      where: { cod_task },
-      relations: ["user", "status"],
-      select: {
-        cod_task: true,
-        title: true,
-        description: true,
+      where: {
+        cod_task,
         user: {
-          cod_user: true,
-          name: true,
-          email: true,
+          cod_user,
         },
       },
     });
   }
 
   async updateTask(task: ITask) {
-    const { cod_status, ...taskUpdate } = task;
+    const { cod_user, user, cod_status, ...taskUpdate } = task;
     await this.taskRepository.update(task.cod_task, taskUpdate);
   }
 }

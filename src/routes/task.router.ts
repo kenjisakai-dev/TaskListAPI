@@ -14,7 +14,7 @@ export class TaskRouter {
     const taskController = container.resolve(TaskController);
 
     this.router.post("/create", taskController.createTask);
-    this.router.get("/get/:cod_task", taskController.getTask);
+    this.router.get("/getTasksByUser", taskController.getTasksByUser);
     this.router.patch("/update", taskController.updateTask);
   }
 

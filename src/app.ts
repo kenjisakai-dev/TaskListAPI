@@ -25,7 +25,7 @@ export class App {
   routes() {
     this.app.use("/api/v1/taskList/user", new UserRouter().getRouter());
     this.app.use(
-      "/api/v1/taskList",
+      "/api/v1/taskList/task",
       authMiddleware,
       new TaskRouter().getRouter()
     );

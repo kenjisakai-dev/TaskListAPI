@@ -17,7 +17,7 @@ export class UserService {
     const getUser = await userRepository.getUserByEmail(user.email);
 
     if (getUser) {
-      throw new BadRequestError("E-mail ja cadastrado.");
+      throw new BadRequestError("E-mail já cadastrado.");
     }
 
     const hashPassword = await bcrypt.hash(user.password, 10);

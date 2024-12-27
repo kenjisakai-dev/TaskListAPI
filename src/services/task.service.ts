@@ -2,6 +2,7 @@ import { container, injectable } from "tsyringe";
 import { NotFoundError } from "../helpers/apiError";
 import { ITask } from "../interface/task.interface";
 import { TaskRepository } from "../repositories/task.repository";
+import { UserRepository } from "../repositories/user.repository";
 import statusService from "./status.service";
 
 @injectable()
@@ -13,25 +14,26 @@ export class TaskService {
     await taskRepository.createTask(data);
   }
 
-  async getTask(cod_task: number) {
-    const taskRepository = container.resolve(TaskRepository);
-    const task = await taskRepository.getTask(cod_task);
-
-    if (!task) {
-      throw new NotFoundError("A Tarefa não foi encontrada.");
-    }
-
-    return task;
+  async getTasksByUser(cod_user: number) {
+    const userRepository = container.resolve(UserRepository);
+    return await userRepository.getTasksByUser(cod_user);
   }
 
   async updateTask(data: ITask) {
-    await this.getTask(data.cod_task);
+    const taskRepository = container.resolve(TaskRepository);
+    const task = await taskRepository.getTaskByUserAndTask(
+      data.cod_user,
+      data.cod_task
+    );
+
+    if (!task) {
+      throw new NotFoundError("A tarefa do usuário não foi encontrada.");
+    }
 
     if (data.cod_status) {
       data.status = await statusService.getStatus(data.cod_status);
     }
 
-    const taskRepository = container.resolve(TaskRepository);
     await taskRepository.updateTask(data);
   }
 }

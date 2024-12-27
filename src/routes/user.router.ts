@@ -15,7 +15,6 @@ export class UserRouter {
 
     this.router.post("/create", userController.createUser);
     this.router.post("/login", userController.login);
-    // this.router.patch("/update", userController.updateTask);
   }
 
   getRouter() {
