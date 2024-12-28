@@ -1,8 +1,8 @@
 import { injectable } from "tsyringe";
 import { Repository } from "typeorm";
-import { Task } from "../entities/task.entity";
-import { ITask } from "../interface/task.interface";
-import { getDataSource } from "../database/dataSource";
+import { Task } from "@entities/task.entity";
+import { ITask } from "@interface/task.interface";
+import { getDataSource } from "@database/dataSource";
 
 @injectable()
 export class TaskRepository {

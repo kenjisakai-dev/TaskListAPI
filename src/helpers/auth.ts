@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
-import env from "../config/environment";
-import { BadRequestError, ForbbidenError } from "./apiError";
-import { IUserPayload } from "../interface/user.interface";
-import { IAuthToken } from "../interface/auth.interface";
+import env from "@config/environment";
+import { BadRequestError, ForbbidenError } from "@helpers/apiError";
+import { IUserPayload } from "@interface/user.interface";
+import { IAuthToken } from "@interface/auth.interface";
 
 export function createToken(user: IUserPayload) {
   const secretKey = getSecretKey();

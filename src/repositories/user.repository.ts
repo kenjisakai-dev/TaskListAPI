@@ -1,8 +1,8 @@
 import { injectable } from "tsyringe";
 import { Repository } from "typeorm";
-import { getDataSource } from "../database/dataSource";
-import { User } from "../entities/user.entity";
-import { IUser } from "../interface/user.interface";
+import { getDataSource } from "@database/dataSource";
+import { User } from "@entities/user.entity";
+import { IUser } from "@interface/user.interface";
 
 @injectable()
 export class UserRepository {

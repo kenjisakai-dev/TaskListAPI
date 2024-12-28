@@ -1,5 +1,5 @@
 import PasswordValidator from "password-validator";
-import { BadRequestError } from "./apiError";
+import { BadRequestError } from "@helpers/apiError";
 
 export function validatePassword(password: string) {
   const schema = schemaPassword();

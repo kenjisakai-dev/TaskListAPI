@@ -1,5 +1,5 @@
 import validator from "validator";
-import { BadRequestError } from "./apiError";
+import { BadRequestError } from "@helpers/apiError";
 
 export function validateEmail(email: string) {
   if (!validator.isEmail(email)) {

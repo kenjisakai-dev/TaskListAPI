@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { container, injectable } from "tsyringe";
-import { BadRequestError, UnauthorizedError } from "../helpers/apiError";
-import { UserService } from "../services/user.service";
-import { IUser } from "../interface/user.interface";
-import { validatePassword } from "../helpers/validatePassword";
-import { validateEmail } from "../helpers/validateEmail";
-import { IAuthLogin } from "../interface/auth.interface";
+import { BadRequestError, UnauthorizedError } from "@helpers/apiError";
+import { UserService } from "@services/user.service";
+import { IUser } from "@interface/user.interface";
+import { validatePassword } from "@helpers/validatePassword";
+import { validateEmail } from "@helpers/validateEmail";
+import { IAuthLogin } from "@interface/auth.interface";
 
 @injectable()
 export class UserController {

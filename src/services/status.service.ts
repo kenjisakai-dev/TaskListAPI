@@ -1,5 +1,5 @@
-import { NotFoundError } from "../helpers/apiError";
-import statusRepository from "../repositories/status.repository";
+import { NotFoundError } from "@helpers/apiError";
+import statusRepository from "@repositories/status.repository";
 
 async function getStatus(cod_status: number) {
   const status = await statusRepository.getStatus(cod_status);

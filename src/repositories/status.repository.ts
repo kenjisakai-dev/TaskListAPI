@@ -1,5 +1,5 @@
-import { getDataSource } from "../database/dataSource";
-import { Status } from "../entities/status.entity";
+import { getDataSource } from "@database/dataSource";
+import { Status } from "@entities/status.entity";
 
 const statusRepository = getDataSource().getRepository(Status);
 

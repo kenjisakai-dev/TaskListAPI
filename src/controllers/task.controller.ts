@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { container, injectable } from "tsyringe";
-import { BadRequestError } from "../helpers/apiError";
-import { ITask } from "../interface/task.interface";
-import { TaskService } from "../services/task.service";
+import { BadRequestError } from "@helpers/apiError";
+import { ITask } from "@interface/task.interface";
+import { TaskService } from "@services/task.service";
 
 @injectable()
 export class TaskController {

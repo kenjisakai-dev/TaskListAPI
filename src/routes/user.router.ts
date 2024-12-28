@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { container } from "tsyringe";
-import { UserController } from "../controller/user.controller";
+import { UserController } from "@controllers/user.controller";
 
 export class UserRouter {
   private router: Router;

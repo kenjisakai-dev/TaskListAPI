@@ -1,7 +1,7 @@
 import request from "supertest";
 import fs from "fs";
-import { App } from "../src/app";
-import { getDataSource } from "../src/database/dataSource";
+import { App } from "@src/app";
+import { getDataSource } from "@src/database/dataSource";
 
 const app = new App().app;
 const supertest = request(app);

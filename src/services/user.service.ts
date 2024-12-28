@@ -4,11 +4,11 @@ import {
   BadRequestError,
   NotFoundError,
   UnauthorizedError,
-} from "../helpers/apiError";
-import { UserRepository } from "../repositories/user.repository";
-import { IUser } from "../interface/user.interface";
-import { IAuthLogin } from "../interface/auth.interface";
-import { createToken } from "../helpers/auth";
+} from "@helpers/apiError";
+import { UserRepository } from "@repositories/user.repository";
+import { IUser } from "@interface/user.interface";
+import { IAuthLogin } from "@interface/auth.interface";
+import { createToken } from "@helpers/auth";
 
 @injectable()
 export class UserService {

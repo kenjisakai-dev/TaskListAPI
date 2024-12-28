@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { container } from "tsyringe";
-import { TaskController } from "../controller/task.controller";
+import { TaskController } from "@controllers/task.controller";
 
 export class TaskRouter {
   private router: Router;

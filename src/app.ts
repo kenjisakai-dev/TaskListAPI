@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import "express-async-errors";
 import express, { Application } from "express";
-import { TaskRouter } from "./routes/task.router";
-import { UserRouter } from "./routes/user.router";
-import { errorMiddleware } from "./middlewares/error";
-import { getDataSource } from "./database/dataSource";
-import { authMiddleware } from "./middlewares/auth";
+import { TaskRouter } from "@routes/task.router";
+import { UserRouter } from "@routes/user.router";
+import { errorMiddleware } from "@middlewares/error";
+import { getDataSource } from "@database/dataSource";
+import { authMiddleware } from "@middlewares/auth";
 
 export class App {
   public app: Application;

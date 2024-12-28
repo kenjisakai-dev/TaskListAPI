@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { UnauthorizedError } from "../helpers/apiError";
-import { verifyToken } from "../helpers/auth";
-import { IUserPayload } from "../interface/user.interface";
+import { UnauthorizedError } from "@helpers/apiError";
+import { verifyToken } from "@helpers/auth";
+import { IUserPayload } from "@interface/user.interface";
 import { container } from "tsyringe";
-import { UserService } from "../services/user.service";
+import { UserService } from "@services/user.service";
 
 export const authMiddleware = async (
   req: Request,

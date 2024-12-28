@@ -1,9 +1,9 @@
 import { container, injectable } from "tsyringe";
-import { NotFoundError } from "../helpers/apiError";
-import { ITask } from "../interface/task.interface";
-import { TaskRepository } from "../repositories/task.repository";
-import { UserRepository } from "../repositories/user.repository";
-import statusService from "./status.service";
+import { NotFoundError } from "@helpers/apiError";
+import { ITask } from "@interface/task.interface";
+import { TaskRepository } from "@repositories/task.repository";
+import { UserRepository } from "@repositories/user.repository";
+import statusService from "@services/status.service";
 
 @injectable()
 export class TaskService {

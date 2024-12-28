@@ -5,8 +5,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Status } from "./status.entity";
-import { User } from "./user.entity";
+import { Status } from "@entities/status.entity";
+import { User } from "@entities/user.entity";
 
 @Entity("task")
 export class Task {
