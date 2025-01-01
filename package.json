@@ -1,0 +1,48 @@
+{
+  "name": "tasklistapi",
+  "version": "1.0.0",
+  "main": "src/server.ts",
+  "scripts": {
+    "start": "cross-env NODE_ENV=DEV tsx watch src/server.ts",
+    "test": "cross-env NODE_ENV=TEST jest --passWithNoTests --maxWorkers=1",
+    "migration:generate": "npm run migration:generate:dev && npm run migration:generate:test",
+    "migration:generate:dev": "typeorm-ts-node-commonjs migration:generate ./src/migrations/migration -d ./src/database/dataSource.ts",
+    "migration:generate:test": "typeorm-ts-node-commonjs migration:generate ./spec/migrations/migration -d ./spec/dataSourceTest.ts",
+    "migration:up": "typeorm-ts-node-commonjs migration:run -d ./src/database/dataSource.ts",
+    "migration:down": "typeorm-ts-node-commonjs migration:revert -d ./src/database/dataSource.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^22.10.2",
+    "@types/supertest": "^6.0.2",
+    "@types/validator": "^13.12.2",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.5",
+    "password-validator": "^5.3.0",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "tsyringe": "^4.8.0",
+    "typeorm": "^0.3.20",
+    "validator": "^13.12.0"
+  }
+}
