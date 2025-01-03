@@ -32,6 +32,8 @@ As bibliotecas que têm o prefixo `@types/` são pacotes que fornecem definiçõ
 
 -   O **`tsyringe`** é utilizado para gerenciar as injeções de dependências.
 
+-   O **`tsconfig-paths`** é utilizado para ajudar a resolver os caminhos personalizados definidos no arquivo de configuração do TypeScript `tsconfig.json`.
+
 #### Banco de Dados
 
 -   O **`typeORM`** é utilizado para interagir com o bancos de dados relacional.
@@ -66,6 +68,10 @@ As bibliotecas que têm o prefixo `@types/` são pacotes que fornecem definiçõ
 
 -   O **`express-async-errors`** é utilizado para gerenciar o tratamento de erros em funções assíncronas no Express. Evitando a necessidade de usar **`try-catch`** em muitos casos, quando há um middleware global de erros.
 
+#### Documentação
+
+-   O **`swagger-ui-express`** é utilizado para integrar a documentação swagger com interface gráfica que facilidade o teste dos endpoints da API
+
 ## 🛠️ Como executar o projeto
 
 1. Instale as dependências do projeto
@@ -82,7 +88,7 @@ As bibliotecas que têm o prefixo `@types/` são pacotes que fornecem definiçõ
         ```
         DB_USERNAME = "usuário"
         DB_PASSWORD = "senha"
-        DB_SERVER = "servidor-banco"
+        DB_HOST = "servidor-banco"
         DB_DATABASE = "nome-banco"
 
         SECRET_KEY = "chave secreta JWT"
@@ -99,6 +105,8 @@ As bibliotecas que têm o prefixo `@types/` são pacotes que fornecem definiçõ
     ```sh
     npm run start
     ```
+
+-   A API possuí uma documentação swagger que pode ser acessada na rota `http://localhost:3000/swagger`
 
 ## 🧪 Como testar a API
 
@@ -175,7 +183,7 @@ npm run test
 
 <br>
 
-> A API utiliza um middleware que verifica o token JWT fornecido na requisição. Se o token for válido, ele é decodificado para extrair os dados do usuário. Com essas informações atribuimos a tarefa ao usuário que forneceu o token.
+> A API utiliza um middleware que verifica o token JWT fornecido na requisição. Se o token for válido, ele é decodificado para extrair os dados do usuário. Com essas informações conseguimos vincular a tarefa ao usuário.
 
 #### **Parâmetros da Requisição**
 
@@ -201,7 +209,7 @@ npm run test
 
 <br>
 
-> A API utiliza um middleware que verifica o token JWT fornecido na requisição. Se o token for válido, ele é decodificado para extrair os dados do usuário. Com essas informações conseguimos obter as tarefas vinculadas ao usuário que forneceu o token.
+> A API utiliza um middleware que verifica o token JWT fornecido na requisição. Se o token for válido, ele é decodificado para extrair os dados do usuário. Com essas informações conseguimos obter as tarefas vinculadas ao usuário.
 
 #### **Parâmetros da Requisição**
 
@@ -255,7 +263,7 @@ npm run test
 
 <br>
 
-> A API utiliza um middleware que verifica o token JWT fornecido na requisição. Se o token for válido, ele é decodificado para extrair os dados do usuário. Com essas informações conseguimos obter as tarefas vinculadas ao usuário que forneceu o token.
+> A API utiliza um middleware que verifica o token JWT fornecido na requisição. Se o token for válido, ele é decodificado para extrair os dados do usuário. Com essas informações conseguimos obter e atualizar as tarefas vinculadas ao usuário.
 
 #### **Parâmetros da Requisição**
 

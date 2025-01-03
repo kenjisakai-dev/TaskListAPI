@@ -1,0 +1,503 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TaskListAPI",
+    "description": "A API TaskList permite o gerenciamento das tarefas dos usuários. Sendo possível o acompanhamento dos status das tarefas, além de gerenciar a criação de usuários e processos de login.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1/taskList"
+    }
+  ],
+  "paths": {
+    "/user/create": {
+      "post": {
+        "summary": "Cadastrar usuário",
+        "description": "Endpoint responsável por cadastrar um novo usuário",
+        "tags": ["Usuários"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "Stella Luana Araújo",
+                    "email": "stella_araujo@gmail.com",
+                    "password": "oZeHnhj@BR7"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/token"
+                  }
+                },
+                "examples": {
+                  "token": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RfdXNlciI6MSwiaWF0IjoxNzM1MjU0ODQ0LCJleHAiOjE3MzUzNDEyNDR9.pvZW8n863bozAqQ53H-c_67aBim2P8RukO4W1hldpYM"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Dados Faltantes": {
+                    "value": {
+                      "message": "O nome, email e senha são obrigatórios."
+                    }
+                  },
+                  "E-mail Existente": {
+                    "value": {
+                      "message": "E-mail já cadastrado."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "summary": "Login do usuário",
+        "description": "Endpoint responsável por fazer o login do usuário e obter o token de acesso",
+        "tags": ["Usuários"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              },
+              "examples": {
+                "login": {
+                  "value": {
+                    "email": "stella_araujo@gmail.com",
+                    "password": "oZeHnhj@BR7"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/token"
+                  }
+                },
+                "examples": {
+                  "token": {
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RfdXNlciI6MSwiaWF0IjoxNzM1MjU0ODQ0LCJleHAiOjE3MzUzNDEyNDR9.pvZW8n863bozAqQ53H-c_67aBim2P8RukO4W1hldpYM"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Login Inválido": {
+                    "value": {
+                      "message": "Login Inválido."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task/create": {
+      "post": {
+        "summary": "Criar tarefa",
+        "description": "Endpoint responsável por cadastrar uma nova tarefa.\n\nA API utiliza um middleware que verifica o token JWT fornecido na requisição. Se o token for válido, ele é decodificado para extrair os dados do usuário. Com essas informações conseguimos vincular a tarefa ao usuário.",
+        "tags": ["Tarefas"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/task"
+              },
+              "examples": {
+                "task": {
+                  "value": {
+                    "title": "Estudar JS",
+                    "description": "Operadores Aritméticos"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Dados Faltantes": {
+                    "value": {
+                      "message": "O título e descrição são obrigatórios."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Token Faltante": {
+                    "value": {
+                      "message": "O token de acesso é obrigatório."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbbiden",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Token Inválido": {
+                    "value": {
+                      "message": "O token de acesso é inválido."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task/getTasksByUser": {
+      "get": {
+        "summary": "Obter tarefas do usuário",
+        "description": "Endpoint responsável por obter as tarefas do usuário.\n\nA API utiliza um middleware que verifica o token JWT fornecido na requisição. Se o token for válido, ele é decodificado para extrair os dados do usuário. Com essas informações conseguimos obter as tarefas vinculadas ao usuário.",
+        "tags": ["Tarefas"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/TasksUser"
+                  }
+                },
+                "examples": {
+                  "token": {
+                    "value": {
+                      "cod_user": 1,
+                      "name": "Stella Luana Araújo",
+                      "email": "stella_araujo@gmail.com",
+                      "tasks": [
+                        {
+                          "cod_task": 1,
+                          "title": "Estudar JS",
+                          "description": "Operadores Relacionais",
+                          "status": {
+                            "cod_status": 1,
+                            "description": "New"
+                          }
+                        },
+                        {
+                          "cod_task": 2,
+                          "title": "Estudar JS",
+                          "description": "Operadores Aritméticos",
+                          "status": {
+                            "cod_status": 3,
+                            "description": "Done"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Token Faltante": {
+                    "value": {
+                      "message": "O token de acesso é obrigatório."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbbiden",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Token Inválido": {
+                    "value": {
+                      "message": "O token de acesso é inválido."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task/update": {
+      "patch": {
+        "summary": "Atualizar tarefa",
+        "description": "Endpoint responsável por atualizar a tarefa do usuário.\n\nA API utiliza um middleware que verifica o token JWT fornecido na requisição. Se o token for válido, ele é decodificado para extrair os dados do usuário. Com essas informações conseguimos obter e atualizar as tarefas vinculadas ao usuário.",
+        "tags": ["Tarefas"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/task"
+              },
+              "examples": {
+                "task": {
+                  "value": {
+                    "cod_task": 1,
+                    "title": "Estudar JavaScript",
+                    "description": "Operadores Aritméticos",
+                    "cod_status": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Dados Faltantes": {
+                    "value": {
+                      "message": "O código da tarefa é obrigatório."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Token Faltante": {
+                    "value": {
+                      "message": "O token de acesso é obrigatório."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbbiden",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Token Inválido": {
+                    "value": {
+                      "message": "O token de acesso é inválido."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Tarefa Inexistente": {
+                    "value": {
+                      "message": "A tarefa do usuário não foi encontrada."
+                    }
+                  },
+                  "Status Inexistente": {
+                    "value": {
+                      "message": "O status não foi encontrado."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "cod_user": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "login": {
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "token": {
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "task": {
+        "properties": {
+          "cod_task": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "cod_user": {
+            "type": "integer"
+          },
+          "cod_status": {
+            "type": "integer"
+          }
+        }
+      },
+      "tasksByUser": {
+        "properties": {
+          "cod_user": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cod_task": {
+                  "type": "integer"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "object",
+                  "properties": {
+                    "cod_status": {
+                      "type": "integer"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "status": {
+        "cod_status": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

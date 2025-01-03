@@ -6,6 +6,8 @@ import { UserRouter } from "@routes/user.router";
 import { errorMiddleware } from "@middlewares/error";
 import { getDataSource } from "@database/dataSource";
 import { authMiddleware } from "@middlewares/auth";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocs from "@docs/swagger.json";
 
 export class App {
   public app: Application;
@@ -23,6 +25,8 @@ export class App {
   }
 
   routes() {
+    this.app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
     this.app.use("/api/v1/taskList/user", new UserRouter().getRouter());
     this.app.use(
       "/api/v1/taskList/task",
